@@ -11,7 +11,7 @@ Thin GitHub Actions wrapper for the GNOME GitLab top-level group mirror.
   `gnome/*` beneath `glab-forks`
 - Runs deterministic mirror batch shards with five jobs max in parallel
 - Schedules at minute 5 of hours 5, 11, 17, and 23 UTC
-- Publishes plan, report, CSV, JSON, and Parquet artifacts for each run
+- Publishes discovery, plan, report, CSV, JSON, and Parquet artifacts for each run
 
 ## Validation
 
