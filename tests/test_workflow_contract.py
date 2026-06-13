@@ -4,6 +4,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = REPO_ROOT / ".github" / "workflows" / "group-sync.yml"
+PROJECTS_ONLY_WORKFLOW = REPO_ROOT / ".github" / "workflows" / "projects-only-sync.yml"
 
 
 class WorkflowContractTests(unittest.TestCase):
@@ -19,6 +20,18 @@ class WorkflowContractTests(unittest.TestCase):
         self.assertIn("target-token-secret: GL_PAT_GROUP_GNOME_SVC", text)
         self.assertIn('cron: "5 12 2-30/2 * *"', text)
         self.assertIn("emit-parquet: true", text)
+
+    def test_projects_only_wrapper_targets_shared_workflow_and_config_path(self) -> None:
+        text = PROJECTS_ONLY_WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn(
+            "shared-common/glab-groups-shared/.github/workflows/group-sync-core.yml@mcr/main",
+            text,
+        )
+        self.assertIn("config-path: glab-groups-gnome", text)
+        self.assertIn("target-token-secret: GL_PAT_GROUP_GNOME_SVC", text)
+        self.assertIn("projects-only: true", text)
+        self.assertIn("workflow_dispatch:", text)
+        self.assertNotIn("schedule:", text)
 
 
 if __name__ == "__main__":
